@@ -1,0 +1,255 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Users {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //  1 to many
+  Biodata Biodata[]
+  Avatar  Avatar[]
+}
+
+model Author {
+  id        Int      @id @default(autoincrement())
+  name      String
+  avatar_id Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model Biodata {
+  id        Int      @id @default(autoincrement())
+  name      String
+  address   String
+  user_id   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  //    many to 1
+  Users     Users    @relation(fields: [user_id], references: [id])
+
+
+  //  1 to many
+  Address Address[]
+}
+
+
+model Avatar {
+  id        Int      @id @default(autoincrement())
+  filename                      String
+  location                      String
+  user_id   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  //    many to 1
+  Users     Users    @relation(fields: [user_id], references: [id])
+}
+
+
+model Address {
+  id                Int      @id @default(autoincrement())
+  nama_lengkap      String
+  biodata_id        Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  //    many to 1
+  Biodata     Biodata    @relation(fields: [biodata_id], references: [id])
+}
+
+model Section_text {
+  id                Int      @id @default(autoincrement())
+  name              String
+  title             String
+  description       String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+
+  //     Foreign key
+}
+
+model Main_banner {
+  id                Int      @id @default(autoincrement())
+  url               String
+  description       String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Banner_image {
+  id                Int      @id @default(autoincrement())
+  url               String
+  description       String
+  page              String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Page_config {
+  id                Int      @id @default(autoincrement())
+  name              String
+  title             String
+  description       String
+  mete_title        String
+  meta_description  String
+  meta_image        String
+  meta_url          String
+  config_id         Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+
+  //    relasi
+}
+
+model Section_banner {
+  id                Int      @id @default(autoincrement())
+  title             String
+  description       String
+  url               String
+  link              String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Millesstone {
+  id                Int      @id @default(autoincrement())
+  years             String
+  title             String
+  description       String
+  photo             String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Product {
+  id                Int      @id @default(autoincrement())
+  name              String
+  logo              String
+  background        String
+  youtube_link      String
+  instagram_link    String
+  twitter_link      String
+  category          String
+  description       String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Blog {
+  id                Int      @id @default(autoincrement())
+  title             String
+  slug              String
+  tags              String
+  description       String
+  relase_date       DateTime
+  excrept           String
+  mete_title        String
+  meta_tags         String
+  meta_description  String
+  visited_count     Int
+  tiny_url          String
+  flag              String
+  users_id          Int
+  author_id         Int
+  media_id          Int
+  category          Category_media
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Press_release {
+  id                Int      @id @default(autoincrement())
+  title             String
+  slug              String
+  tags              String
+  description       String
+  relase_date       DateTime
+  excrept           String
+  mete_title        String
+  meta_tags         String
+  meta_description  String
+  visited_count     Int
+  tiny_url          String
+  flag              String
+  users_id          Int
+  author_id         Int
+  media_id          Int
+  category_id       Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+
+model Category {
+    id                Int      @id @default(autoincrement())
+    name              String
+    slug              String
+    updatedAt         DateTime @updatedAt
+    createdAt         DateTime @default(now())
+}
+
+model Media {
+  id                Int      @id @default(autoincrement())
+  name              String
+  description       String
+  type              String
+  extention         String
+  media_mime        String
+  media_meta        String
+  media_url         String
+  image_source      String
+  location          String
+  status            String
+  updatedAt         DateTime @updatedAt
+  createdAt         DateTime @default(now())
+}
+
+model Current_opening {
+  id                Int      @id @default(autoincrement())
+  position          String
+  description       String
+  location          String
+  type              Type
+  valid_until       DateTime
+  apply_link        String
+  status            Status
+  total_view        Int
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+enum Category_media {
+  content
+  media_platfrom
+  commercial
+  other
+}
+
+enum Type {
+  fulltime
+  freelance
+}
+
+enum Status {
+  avtive
+  inactive
+}
