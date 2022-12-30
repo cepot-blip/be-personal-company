@@ -11,7 +11,7 @@ const salt = bcrypt.genSaltSync(10)
 //      USERS CREATE
 export const UsersCreate= async (req = request, res = response) => {
     try {
-        const {email, password} = await req.body
+        const {email, password, role} = await req.body
 
         //      VALIDASI EMAIL
         const checkUniqueEmail = await UsersModels.findUnique({
@@ -31,6 +31,7 @@ export const UsersCreate= async (req = request, res = response) => {
             data : {
                 email : email,
                 password : bcrypt.hashSync(password, salt),
+				role : role,
                 token : token
             }
         })
@@ -39,7 +40,8 @@ export const UsersCreate= async (req = request, res = response) => {
             {
                 app_name : process.env.APP_NAME,
                 id : createUsers.id,
-                email : createUsers.email
+                email : createUsers.email,
+				role : createUsers.role
             },
             process.env.API_SECRET,
         )
@@ -124,6 +126,14 @@ export const UsersReadAll = async (req = request, res = response) => {
 			take: parseInt(limit),
 			orderBy: { id: "desc" },
 			where: filter,
+			include : {
+				Avatar : {
+					select : {
+						id : true,
+						location : true
+					}
+				}
+			}
         })
 		
         const conn = await UsersModels.count()

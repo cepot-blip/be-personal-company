@@ -10,18 +10,18 @@ export const AddressCreate = async (req = request, res = response) => {
             biodata_id
         } = await req.body
 
-        // const checkUniqueId = await AddressModels.findFirst({
-        //     where : {
-        //         biodata_id : parseInt(biodata_id)
-        //     }
-        // })
+        const checkUniqueId = await AddressModels.findFirst({
+            where : {
+                biodata_id : parseInt(biodata_id)
+            }
+        })
 
-        // if (!checkUniqueId) {
-        //     return res.status(400).json({
-        //         success : false,
-        //         msg : "Biodata id already exist!"
-        //     })
-        // }
+        if (!checkUniqueId) {
+            return res.status(400).json({
+                success : false,
+                msg : "Biodata id not found!"
+            })
+        }
 
         const result = await AddressModels.create({
             data : {
@@ -79,10 +79,10 @@ export const AddressUpdate = async (req = request, res = response) => {
     try {
         
         const data = await req.body
-        
+        const { id } = await req.params
         const checkUniqueId = await AddressModels.findFirst({
             where : {
-                id : parseInt(data.id)
+                id : parseInt(id)
             }
         })
 
@@ -95,7 +95,11 @@ export const AddressUpdate = async (req = request, res = response) => {
 
         const result = await AddressModels.update({
             where : {
-                id : parseInt(data.id)
+                id : parseInt(id)
+            },
+            data : {
+                nama_lengkap : data.nama_lengkap,
+                biodata_id : parseInt(data.biodata_id)
             }
         })
 
@@ -116,11 +120,11 @@ export const AddressUpdate = async (req = request, res = response) => {
 //      ADDRESS DELETE
 export const AddressDelete = async (req = request, res = response) => {
     try {
-        const data = await req.body
+        const { id } = await req.params
 
         const checkUniqueId = await AddressModels.findFirst({
             where : {
-                id : parseInt(data.id)
+                id : parseInt(id)
             }
         })
 
@@ -133,7 +137,7 @@ export const AddressDelete = async (req = request, res = response) => {
 
         const result = await AddressModels.delete({
             where : {
-                id : parseInt(data.id)
+                id : parseInt(id)
             }
         })
 

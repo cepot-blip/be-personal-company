@@ -6,27 +6,31 @@ import { BiodataModels } from "../models/Models"
 export const BiodataCreate = async (req = request, res = response) => {
     try {
         const {
-            name,
-            user_id
+           email,
+           phone,
+           nama_lengkap,
+           avatar_id
         } = await req.body
 
-        // const checkUniqueId = await BiodataModels.findFirst({
-        //     where : {
-        //         user_id : parseInt(user_id)
-        //     }
-        // })
+        const checkUniqueId = await BiodataModels.findFirst({
+            where : {
+                avatar_id : parseInt(avatar_id)
+            }
+        })
 
-        // if (!checkUniqueId) {
-        //     return res.status(400).json({
-        //         success : false,
-        //         msg : "User id already exist!"
-        //     })
-        // }
+        if (!checkUniqueId) {
+            return res.status(400).json({
+                success : false,
+                msg : "Avatar id not found!"
+            })
+        }
 
         const result = await BiodataModels.create({
             data : {
-                name : name,
-                user_id : parseInt(user_id)
+                email : email,
+                avatar_id: parseInt(avatar_id),
+                phone : phone,
+                nama_lengkap : nama_lengkap
             }
         })
 
@@ -78,12 +82,11 @@ export const BiodataRead = async (req = request, res = response) => {
 //      BIODATA UPDATE
 export const BiodataUpdate = async (req = request, res = response) => {
     try {
-
         const data = await req.body
-
-       const  checkUniqueId = await BiodataModels.findUnique({
+        const { id } = await req.params
+        const  checkUniqueId = await BiodataModels.findUnique({
             where : {
-                id : parseInt(data.id)
+                id : parseInt(id)
             }
         })
 
@@ -96,8 +99,13 @@ export const BiodataUpdate = async (req = request, res = response) => {
 
         const result = await BiodataModels.update({
             where : {
-                id : parseInt(data.id)
-                
+                id : parseInt(id)
+            },
+            data : {
+                email : data.email,
+                phone : data.phone,
+                nama_lengkap : data.nama_lengkap,
+                avatar_id : parseInt(data.avatar_id)
             }
         })
 
@@ -118,11 +126,10 @@ export const BiodataUpdate = async (req = request, res = response) => {
 //      BIODATA DELETE
 export const BiodataDelete = async (req = request, res = response) => {
     try {
-        const data = await req.body
-
+        const { id } = await req.params
         const checkUniqueId = await BiodataModels.findUnique({
             where : {
-                id : data.id
+                id : parseInt(id)
             }
         })
 
@@ -135,7 +142,7 @@ export const BiodataDelete = async (req = request, res = response) => {
 
         const result = await BiodataModels.delete({
             where : {
-                id : data.id
+                id : parseInt(id)
             }
         })
 

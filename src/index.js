@@ -10,6 +10,10 @@ import helmet from "helmet"
 import users_controllers from "./routes/Users_routes"
 import biodata_controllers from "./routes/Biodata_routes"
 import address_controllers from "./routes/Address_routes"
+import avatar_controllers from "./routes/avatar_routes"
+import author_controllers from "./routes/Author_routes"
+import section_text_controllers from "./routes/Section_text_Routes"
+import banner_controllers from "./routes/Banner_routes"
 
 //	RATE LIMIT, THE PROCESS OF LIMITING THE NUMBER OF USER/CLIENT REQUSET ON CERTAIN RESOURCES
 const limiter = rateLimit({
@@ -57,6 +61,10 @@ app.use(express.static(path.join(__dirname, "../static/")))
 app.use("/api", users_controllers)
 app.use("/api", biodata_controllers)
 app.use("/api", address_controllers)
+app.use("/api", avatar_controllers)
+app.use("/api", author_controllers)
+app.use("/api", section_text_controllers)
+app.use("/api", banner_controllers)
 
 
 //		LISTENER
