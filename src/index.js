@@ -14,6 +14,7 @@ import avatar_controllers from "./routes/avatar_routes"
 import author_controllers from "./routes/Author_routes"
 import section_text_controllers from "./routes/Section_text_Routes"
 import banner_controllers from "./routes/Banner_routes"
+import blog_controllers from "./routes/Blog_routes"
 
 //	RATE LIMIT, THE PROCESS OF LIMITING THE NUMBER OF USER/CLIENT REQUSET ON CERTAIN RESOURCES
 const limiter = rateLimit({
@@ -65,6 +66,7 @@ app.use("/api", avatar_controllers)
 app.use("/api", author_controllers)
 app.use("/api", section_text_controllers)
 app.use("/api", banner_controllers)
+app.use("/api", blog_controllers)
 
 
 //		LISTENER
