@@ -162,10 +162,14 @@ model Product {
   youtube_link      String
   instagram_link    String
   twitter_link      String
-  category          Category_media
+  category_id       Int
   description       String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+
+
+  //    RELATION
+  category          Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
 }
 
 model Blog {
@@ -207,7 +211,6 @@ model Press_release {
   meta_tags         String
   meta_description  String
   visited_count     Int
-  tiny_url          String
   flag              String
   users_id          Int
   author_id         Int
@@ -233,6 +236,7 @@ model Category {
 
     //    FOREIGN KEY
     Press_release     Press_release[]
+    Product           Product[]
 }
 
 model Media {
@@ -246,7 +250,7 @@ model Media {
   media_meta        String
   media_url         String
   image_source      String
-  status            String
+  status            Status
   updatedAt         DateTime @updatedAt
   createdAt         DateTime @default(now())
 
