@@ -11,6 +11,7 @@ import author_routes from "./api/routes/Author/Author_routes"
 import banner_routes from "./api/routes/Banner/Banner_routes"
 import blog_routes from "./api/routes/Blog/Blog_routes"
 import category_routes from "./api/routes/Category/category_routes"
+import uploader_routes from "./api/routes/Upload/Upload_routes"
 
 //	RATE LIMIT, THE PROCESS OF LIMITING THE NUMBER OF USER/CLIENT REQUSET ON CERTAIN RESOURCES
 const limiter = rateLimit({
@@ -62,6 +63,7 @@ app.use("/api", section_text_routes)
 app.use("/api", banner_routes)
 app.use("/api", blog_routes)
 app.use("/api", category_routes)
+app.use("/api", uploader_routes)
 
 app.use((req, res, next) => {
     const error = new Error("Not Found!")
