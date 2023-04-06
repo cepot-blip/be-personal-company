@@ -61,7 +61,6 @@ export const BlogUpdate = async (req = request, res = response) => {
                 meta_tags : data.meta_tags,
                 meta_description : data.meta_description,
                 visited_count : parseInt(data.visited_count),
-                tiny_url : data.tiny_url,
                 flag : data.flag,
                 users_id : parseInt(data.users_id),
                 author_id : parseInt(data.author_id),

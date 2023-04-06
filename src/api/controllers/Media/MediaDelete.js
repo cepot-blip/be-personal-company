@@ -1,11 +1,11 @@
-import { request, response } from "express"
-import { MainBannerModels } from "../../../models/Models"
+import { request, response } from "express";
+import { MediaModels } from "../../../models/Models";
 
 
-export const MainBannerDelete = async (req = request, res = response) => {
+export const MediaDelete = async (req = request, res = response) => {
     try {
         const { id } = await req.params
-        const checkUniqueId = await MainBannerModels.findUnique({
+        const checkUniqueId = await MediaModels.findUnique({
             where : {
                 id : parseInt(id)
             }
@@ -18,7 +18,7 @@ export const MainBannerDelete = async (req = request, res = response) => {
             })
         }
 
-        await MainBannerModels.delete({
+        await MediaModels.delete({
             where : {
                 id : parseInt(id)
             }
@@ -26,7 +26,7 @@ export const MainBannerDelete = async (req = request, res = response) => {
 
         res.status(200).json({
             success : true,
-            msg : "Successfully delete main banner!"
+            msg : "Successfully delete media!"
         })
 
     } catch (error) {

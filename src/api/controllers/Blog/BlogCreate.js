@@ -75,13 +75,17 @@ export const BlogCreate = async (req = request, res = response) => {
                 meta_tags : meta_tags,
                 meta_description : meta_description,
                 visited_count : parseInt(visited_count),
-                tiny_url : tiny_url,
                 flag : flag,
                 users_id : parseInt(users_id),
                 author_id : parseInt(author_id),
                 media_id : parseInt(media_id),
                 category : category
             }
+        })
+
+        res.status(200).json({
+            success : true,
+            msg : "Blog created successfully!"
         })
 
     } catch (error) {

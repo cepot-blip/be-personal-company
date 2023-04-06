@@ -1,6 +1,5 @@
 import express from "express"
 import cors from "cors"
-import path from "path"
 export const app = express()
 import { rateLimit } from "express-rate-limit"
 import helmet from "helmet"
@@ -8,7 +7,6 @@ import users_routes from "./api/routes/Users/Users_routes"
 import section_text_routes from "./api/routes/SectionText/Section_text_Routes"
 import biodata_routes from "./api/routes/Biodata/Biodata_routes"
 import address_routes from "./api/routes/Address/Address_routes"
-import avatar_routes from "./api/routes/Avatar/avatar_routes"
 import author_routes from "./api/routes/Author/Author_routes"
 import banner_routes from "./api/routes/Banner/Banner_routes"
 import blog_routes from "./api/routes/Blog/Blog_routes"
@@ -53,17 +51,20 @@ app.use(
 app.use(limiter)
 app.use(express.json({ limit: "100mb" }))
 app.use(express.urlencoded({ extended: false }))
-app.use(express.static(path.join(__dirname, "../static/")))
 
 
 //        ROUTES
 app.use("/api", users_routes)
 app.use("/api", biodata_routes)
 app.use("/api", address_routes)
-app.use("/api", avatar_routes)
 app.use("/api", author_routes)
 app.use("/api", section_text_routes)
 app.use("/api", banner_routes)
 app.use("/api", blog_routes)
 app.use("/api", category_routes)
 
+app.use((req, res, next) => {
+    const error = new Error("Not Found!")
+    res.status(404)
+    next(error)
+})

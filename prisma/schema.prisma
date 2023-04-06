@@ -61,8 +61,7 @@ model Biodata {
 
 model Avatar {
   id                            Int      @id @default(autoincrement())
-  filename                      String
-  location                      String
+  images                        String   @db.LongText
   users_id                      Int
   createdAt                     DateTime @default(now())
   updatedAt                     DateTime @updatedAt
@@ -103,6 +102,7 @@ model Section_text {
 model Main_banner {
   id                Int      @id @default(autoincrement())
   url               String
+  images            String   @db.LongText
   description       String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -113,8 +113,7 @@ model Banner_image {
   url               String
   description       String
   page              String
-  filename          String
-  location          String
+  images            String   @db.LongText
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
@@ -162,6 +161,7 @@ model Product {
   youtube_link      String
   instagram_link    String
   twitter_link      String
+  telegram_link     String
   category_id       Int
   description       String
   createdAt         DateTime @default(now())
@@ -207,7 +207,7 @@ model Press_release {
   description       String
   relase_date       DateTime
   excrept           String
-  mete_title        String
+  meta_title        String
   meta_tags         String
   meta_description  String
   visited_count     Int
@@ -245,8 +245,7 @@ model Media {
   description       String
   type              String
   extention         String
-  filename          String
-  location          String
+  images            String   @db.LongText
   media_meta        String
   media_url         String
   image_source      String
